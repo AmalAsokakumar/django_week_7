@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'category',
+    'accounts',
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,14 +73,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommercial.wsgi.application'
 
+# this field is added to let django know that we are using a custom model to create users
+AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the second "Account" is the model name that we created inside the models.py file
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'week7',
+        'USER': 'amalasokakumar',
+        'PASSWORD': 'mysqlroot',
+        'HOST': 'localhost',
     }
 }
 
@@ -123,7 +138,7 @@ STATIC_URL = 'static/'                                          # i think this h
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]           # this is where we keep the static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')                  #this is where django will put its assets files
 
-
+# configure media path 
 MEDIA_URL = 'media/'                                            # this is where django will put the uploaded media files 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')                     # we are pointing django where to look for media files 
 
