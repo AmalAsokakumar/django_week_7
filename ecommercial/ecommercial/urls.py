@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('users.urls'), name= 'main_home'),
-     path('accounts/',include('accounts.urls'), name= 'accounts'),
+     path('accounts/',include('accounts.urls'), name= 'main_accounts'),
+     path('shop/', include('store.urls'), name= 'main_store'),
 ]
 urlpatterns =  urlpatterns + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to ensure we can access the picture into the templates.
 
