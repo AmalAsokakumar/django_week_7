@@ -1,7 +1,5 @@
-from distutils.command.upload import upload
-from turtle import update
 from django.db import models
-
+from django.urls import reverse 
 # things to learn from here 
 # what is slug and how to use it properly.
 # details of meta class 
@@ -18,6 +16,11 @@ class category(models.Model):
     class Meta:   # with the meta class we are editing the category name and other things. 
          verbose_name = 'category'
          verbose_name_plural = 'categories'  # to fix the name which is give in the admin dashboard 
+    
+    # with this function we can bring back the url of a particular category 
+    def get_url(self):
+        return reverse('products_by_category', args=[self.slug])# here we will mention the name of <slug:category_slug> in Stor urls.py file, we are also passing slug in list as arguments 
+    
     # creating string way representation of the model ?
     def __str__(self):
         return self.category_name

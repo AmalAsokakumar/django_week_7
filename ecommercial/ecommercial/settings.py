@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'brand',
     'store',
     'category',
     'accounts',
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'category.context_processors.menu_links',  # by including this context_processor in this section we can use this context processors in any templates ( we can use this menu_link in all the templates )
             ],
         },
     },
