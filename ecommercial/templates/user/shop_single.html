@@ -1,5 +1,48 @@
 {% extends 'user_base.html' %}
+{% load static %}
 {% block content %}
+
+
+
+
+
+
+
+<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon"> 
+
+<!-- jQuery -->
+<script src="{% static 'greatcart/js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="{% static 'greatcart/js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="{% static 'greatcart/fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="{% static 'greatcart/css/ui.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'greatcart/cssresponsive.css/' %}css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+<!-- custom javascript -->
+<script src="{% static 'greatcart/js/script.js' %}" type="text/javascript"></script>
+
+<script type="text/javascript">
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+    // jQuery code
+
+}); 
+// jquery end
+</script>
+
+
+
+
+
+
 
 <section class="section-content padding-y bg">
 	<div class="container">
@@ -17,7 +60,7 @@
 				</aside>
 				<main class="col-md-6 border-left">
 
-					<form action="{% url 'add_cart' single_product.id %}" method="POST">
+					{% comment %} <form action="{% url 'add_cart' single_product.id %}" method="POST"> {% endcomment %}
 						{% csrf_token %}
 						<article class="content-body">
 
@@ -76,6 +119,8 @@
 			</div> <!-- row.// -->
 		</div> <!-- card.// -->
 		<!-- ============================ COMPONENT 1 END .// ================================= -->
+    </div>
+ </section> 
 
 
 

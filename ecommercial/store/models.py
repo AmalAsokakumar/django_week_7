@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import category    # here w are using category as foreign key so we need to include it. 
-from brand.models import brand 
+from django.urls import reverse 
+# from brand.models import brand 
 # Create your models here.
 
 # for further reference
@@ -22,6 +23,8 @@ class Product(models.Model):
     created_date    = models.DateTimeField(auto_now_add =True)
     modified_date   = models.DateTimeField(auto_now =True) 
     
+    def get_url(self):
+        return reverse('product_detail', args=[self.category.slug, self.slug])# here we have 2 arguments product slugs and categories slug. here self means this product and category is mentioned above and slug is from  category app ( we can access them because these fields are interconnected with : foreignkey . )   and second slug is this products slug.
     def __str__(self):
         return self.product_name
     

@@ -24,4 +24,11 @@ def store(request, category_slug = None ): # we are passing a slug field to filt
 
 
 def product_detail(request, category_slug, product_slug):
-    return render(request, 'user/shop_single.html',{})
+    try:
+        single_product = Product.objects.get(category__slug = category_slug, slug= product_slug) # here we wanted to get a hold of the slug of the category which is present in the category app. (__slug is a method to access the slug field of that category = which should be matched against the slug field in the url request)
+    except Exception as e:
+        raise e
+    context={
+        'single_product': single_product,  # creating a context dictionary.
+    }
+    return render(request, 'user/shop_single.html', context)
