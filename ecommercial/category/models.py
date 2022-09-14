@@ -13,9 +13,9 @@ class category(models.Model):
     cat_image = models.ImageField(upload_to='photos/categories', blank=True) # this should be the location where the photos will be uploaded into.
     
     # used to fix the typo error in admin page.
-    class Meta:   # with the meta class we are editing the category name and other things. 
-         verbose_name = 'category'
-         verbose_name_plural = 'categories'  # to fix the name which is give in the admin dashboard 
+    # class Meta:   # with the meta class we are editing the category name and other things. 
+    #      verbose_name = 'category'
+    #      verbose_name_plural = 'categories'  # to fix the name which is give in the admin dashboard 
     
     # with this function we can bring back the url of a particular category 
     def get_url(self):

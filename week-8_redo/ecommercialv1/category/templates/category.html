@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+
+             <!-------------------------message tag start---------------------------------->
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+        {% endif %}
+            <!-------------------------------message tag end--------------------------------->
+
+
+            <!---------------------------------display content------------------------------->
+
+    <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+            <!------------------------------end display content---------------------------------->
+</body>
+</html>

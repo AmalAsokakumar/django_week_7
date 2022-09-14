@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import category    # here w are using category as foreign key so we need to include it. 
 from django.urls import reverse 
+from brand.models import brand 
 # from brand.models import brand 
 # Create your models here.
 
@@ -19,7 +20,7 @@ class Product(models.Model):
     stock           = models.IntegerField()
     is_available    = models.BooleanField(default=True)
     category        = models.ForeignKey(category, on_delete=models.CASCADE) # (model_name, what to do when we delete this category) here the entair Field will be deleted when delete this particular field. 
-    # brand           = models.ForeignKey(brand, on_delete=models.CASCADE)
+    brand           = models.ForeignKey(brand, on_delete=models.CASCADE)
     created_date    = models.DateTimeField(auto_now_add =True)
     modified_date   = models.DateTimeField(auto_now =True) 
     
