@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Brand
+from .models import Brands as Brand
 
 # Register your models here.
 class brandAdmin(admin.ModelAdmin):

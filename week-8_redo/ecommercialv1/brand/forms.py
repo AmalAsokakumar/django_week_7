@@ -1,4 +1,4 @@
-from .models import Brand as brand
+from .models import Brands as brand
 from django.forms import ModelForm, TextInput, ClearableFileInput
 
 

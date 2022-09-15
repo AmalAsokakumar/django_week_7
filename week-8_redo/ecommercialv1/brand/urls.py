@@ -6,8 +6,12 @@ from .import views
 
 
 urlpatterns = [
-    path('add_brand/',views.add_product, name = 'brand_image_upload'),
+    path('brand/',views.add_brand, name = 'brand_image_upload'),
     path('success/',views.upload_pic, name = 'brand_success'),
+    path('',views.view_brand, name = 'brand_view'),
+    path('edit-brand/<int:id>',views.edit_brand, name = 'edit_brand'),
+    path('delete-brand/<int:id>',views.delete_brand, name ='delete_brand'),
+    path('delete',views.delete_brand, name ='delete'),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -17,5 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('category.urls'), name='category'), # to check the category
+    path('category/',include('category.urls'), name='category'), # to check the category
+    path('brand/',include('brand.urls'), name='brand'), # to check the category
+    
 ]

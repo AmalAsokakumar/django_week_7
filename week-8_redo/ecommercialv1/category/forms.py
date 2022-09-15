@@ -1,11 +1,11 @@
-from .models import category
+from .models import Categories as Category
 from django.forms import  ModelForm, TextInput, ClearableFileInput
 
 
 class CategoryForm(ModelForm):
     
         class Meta:
-            model   = category
+            model   = Category
             fields  = ['category_name','description','cat_image','offer_status']
             widgets ={
                 'cat_image': ClearableFileInput(attrs={"class":"form-control-file","style":"width:80%"})
