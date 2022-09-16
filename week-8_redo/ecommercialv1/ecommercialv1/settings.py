@@ -71,7 +71,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ecommercialv1.wsgi.application'
-
+# this field is added to let django know that we are using a custom model to create users
+AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the second "Account" is the model name that we created inside the models.py file
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
