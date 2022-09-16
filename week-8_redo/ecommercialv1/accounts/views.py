@@ -86,7 +86,7 @@ def logout(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True) 
 def admin_login(request):
     # if 'email' in request.session:
-        #return redirect('admin_home')
+        # return redirect('admin_home')
     
     if request.user.is_authenticated:
          return redirect('/')  # create a templated to handle this 
@@ -97,7 +97,7 @@ def admin_login(request):
         user = authenticate(email=email, password=password)
         if user is not None:
             login(request,user)
-            request.session['email']= email
+            # request.session['email']= email
             
             return redirect('admin_home')
         else:
