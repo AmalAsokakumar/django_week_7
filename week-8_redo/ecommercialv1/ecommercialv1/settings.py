@@ -98,12 +98,25 @@ AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the se
 #     }
 # }
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
+
+# previous 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 
 
 # Password validation

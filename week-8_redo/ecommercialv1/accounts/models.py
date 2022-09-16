@@ -61,9 +61,9 @@ class Account(AbstractBaseUser):
     is_active       = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD  =['username', 'first_name','last_name']
+    REQUIRED_FIELDS  =['username','first_name','last_name']
     
-    objects = MyAccountManager()                                            # to let the account know thar we are using the MyAccountManager to create user and superusers. 
+    objects = MyAccountManager()       # we are using the MyAccountManager for management.                                     # to let the account know thar we are using the MyAccountManager to create user and superusers. 
     
     
     def __str__(self):
