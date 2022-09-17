@@ -33,6 +33,7 @@ def view_brand(request):
         'title':'Brand View'
     }
     return render(request,'view_brand.html',context)
+    
 
 
 
@@ -64,6 +65,7 @@ def edit_brand(request, id):
             edit = form.save(commit=False)# in order to add this condition i disable the above condition.
             edit.save() #
             return redirect('brand_view')
-        return render(request, 'edit_brand.html', {'form': form} )
+        return render(request, 'editCB.html', {'form': form, 'type':'Brand '} )
     return redirect('/') # un authentication users will be redirected to default page {{ need to change this field }}
+    # return render(request,'edit_brand.html')
     

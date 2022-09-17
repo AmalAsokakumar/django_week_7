@@ -20,9 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('accounts.urls'), name='accounts'),
-    path('category/',include('category.urls'), name='category'), 
-    path('brand/',include('brand.urls'), name='brand'), 
+    path('admin/', admin.site.urls), # all django admin activities 
+    path('',include('accounts.urls'), name='accounts'), # custom user, admin , basic pages.  
+    path('category/',include('category.urls'), name='category'), # category specific pages.
+    path('brand/',include('brand.urls'), name='brand'), # brand specific. 
+    path('store/',include('store.urls'), name='store'), # store related pages.
 ]
 urlpatterns =  urlpatterns + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to ensure we can access the picture into the templates.

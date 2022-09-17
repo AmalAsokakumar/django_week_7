@@ -23,6 +23,7 @@ def upload_pic(request):
     return redirect('add_category')
     # return HttpResponse('category added successful') 
 
+
 def view_category(request):
     form = Category.objects.all()
     context ={
@@ -54,5 +55,5 @@ def edit_category(request, id):
             edit = form.save(commit=False)
             edit.save()
             return redirect('category_view')
-        return render(request, 'edit_category.html', {'form': form})
+        return render(request, 'editCB.html', {'form': form})
     return redirect('/') 

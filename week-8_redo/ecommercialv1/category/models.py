@@ -9,7 +9,7 @@ import uuid
 # Create your models here.
 class Categories(models.Model):
     category_name = models.CharField(max_length=50, unique=True)
-    slug = models.SlugField( unique=True, default= uuid.uuid1) #should be the url of the category and it should be unique, this field should be auto generated because we use SlugField for this slug, to properly use this feature we need to configure the admin.py file 
+    slug = models.SlugField( unique=True) #should be the url of the category and it should be unique, this field should be auto generated because we use SlugField for this slug, to properly use this feature we need to configure the admin.py file 
     description = models.TextField(max_length=255, blank=True) # blank= True means this field is optional, which can be empty. 
     cat_image = models.ImageField(upload_to='photos/categories/', blank=True) # this should be the location where the photos will be uploaded into.
     offer_status = models.BooleanField(default=False)

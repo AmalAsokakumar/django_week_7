@@ -6,10 +6,9 @@ from .import views
 
 
 urlpatterns = [
-    path('',views.add_category, name = 'add_category'), # add_category/
+    path('add',views.add_category, name = 'add_category'), # add_category/
     path('success/',views.upload_pic, name = 'category_success'),
-    path('view/',views.view_category, name = 'category_view'),
-    
+    path('',views.view_category, name = 'category_view'),
     path('edit-category/<int:id>',views.edit_category, name = 'edit_category'),
     path('delete-category/<int:id>',views.delete_category, name ='delete_category'),
     ]

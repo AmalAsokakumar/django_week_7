@@ -71,6 +71,7 @@ def about(request):
 
 
 
+
 #user 
 def login(request):
     return render(request, 'sneat/auth-login-basic.html', {})
@@ -80,7 +81,30 @@ def logout(request):
 
 
 
-#admin
+
+
+def list_users(request): # need to recheck this 
+    list= Account.objects.filter(id)
+    
+    context = {
+        'list': list,
+    }
+    return render(request, 'editCB.html',context)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+#admin 
+#authentication steps are not added. 
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True) 
@@ -94,9 +118,9 @@ def admin_login(request):
     elif request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
+        user = auth.authenticate(email=email, password=password, is_superuser=True)
         if user is not None:
-            login(request,user)
+            auth.login(request,user)
             # request.session['email']= email
             
             return redirect('admin_home')
@@ -106,12 +130,10 @@ def admin_login(request):
     else:
         context={}
         return render(request, 'sneat/admin_login.html',{})    
-
-
-
+    
 
 def admin_logout(request):
-    logout(request)
+    auth.logout(request)
     return redirect('admin_login')
 
 
@@ -120,7 +142,8 @@ def admin_logout(request):
 def admin_home(request):
     # if 'email' in request.session:
         # return HttpResponse('home view')
-    return render(request, 'sneat/admin_index.html', {})
+    # return render(request, 'sneat/admin_index.html', {}) # for testing temp hide it 
+    return render(request, 'admin_index.html', {})
     # else: 
     #     return redirect ('admin_login')
 

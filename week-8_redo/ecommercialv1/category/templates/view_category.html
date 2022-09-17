@@ -1,11 +1,11 @@
-{% extends 'base_table.html' %}
+{% extends 'admin_index.html' %}
 {% load static %}
 {% static 'images' as baseUrl %}
 
 {% block content %}
 
 <div class="container">
-    <h2 class="mb-5"> {% if title %} {{ title }} {% endif%}</h2>
+    <h2 class="ps-3 m-4"> {% if title %} {{ title }} {% endif%}</h2>
 
     <div class="table-responsive">
 
@@ -13,14 +13,6 @@
 
         <thead>
           <tr>
-
-            <th scope="col">
-              <label class="control control--checkbox">
-                <input type="checkbox" class="js-check-all"/>
-                <div class="control__indicator"></div>
-              </label>
-            </th>
-
             <th scope="col">Category Name</th>
             <th scope="col">Slug</th>
             <th scope="col">Description</th>
@@ -33,13 +25,6 @@
         <tbody>
           {% for item in form %}
           <tr>
-            <th scope="row">
-              <label class="control control--checkbox">
-                <input type="checkbox"/>
-                <div class="control__indicator"></div>
-              </label>
-            </th>
-
             <td>
               {{item.category_name}}
             </td>
