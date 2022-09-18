@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cart',
     'store',
     'crispy_forms',
     'accounts',
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.menu_links', # this field is added manually for context preprocessor. for category app. 
+                'cart.context_processors.counter', #to show the cart number as banner and other place.
             ],
         },
     },

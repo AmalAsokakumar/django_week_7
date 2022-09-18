@@ -179,20 +179,22 @@
 		{% for product in products %}
 		<div class="col-md-4">
 			<figure class="card card-product-grid">
-				<div class="img-wrap">
+				<div class="img-wrap p-1">
 	
 					<a href="{{ product.get_url }}"><img src="{{ product.images.url }}"></a>
 	
 				</div> <!-- img-wrap.// -->
 				<figcaption class="info-wrap">
-					<div class="fix-height">
+					 <div class="fix-height">
 						<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
 						<a href="" class="title">{{ product.brand_name }}</a>
 						<div class="price-wrap mt-2">
 							<span class="price p-2">$ {{ product.price }}</span>
 						</div> <!-- price-wrap.// -->
 					</div>
-					<a href="{{ product.get_url }}" class="btn btn-block btn-primary mt-2">Add to Cart </a>
+					<div class="d-grid gap-4">
+					<a href="{{ product.get_url }}" class="btn btn-block btn-primary  mt-2 pe-5 ps-5 text-center ">View Details </a>
+					</div>
 				</figcaption>
 			</figure>
 		</div> <!-- col.// -->

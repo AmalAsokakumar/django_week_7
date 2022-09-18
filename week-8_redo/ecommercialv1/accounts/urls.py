@@ -14,14 +14,14 @@ urlpatterns = [
     path('login/',views.login, name= 'login'),
     path('logout/',views.logout, name= 'logout'),
     
-                        # basic pages
+                        # basic pages needto migrate to other app 
     path('',views.home, name='user_home'),
     # path('shop/',views.shop, name='user_shop'),  # need to add after setting up the store page.
     path('contact/',views.contact, name='user_contact'),
     path('about/',views.about, name='user_about'),
     
                          # admin
-    # path('list-users/',views.list_users, name='user_list'),
+    path('list-users/',views.list_users, name='user_list'),
     path('register/',views.register, name= 'register'),
     path('admin-login/',views.admin_login, name= 'admin_login'),
     path('admin-logout/',views.admin_logout, name= 'admin_logout'),

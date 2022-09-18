@@ -84,7 +84,7 @@ def logout(request):
 
 
 def list_users(request): # need to recheck this 
-    list= Account.objects.filter(id)
+    list= Account.objects.order_by('id')
     
     context = {
         'list': list,

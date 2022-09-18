@@ -8,6 +8,13 @@ from .forms import ProductForm
 # Create your views here.
 
 
+# for private function in product details 
+
+from cart.views import _cart_id
+from cart.models import CartItem
+
+# for paginator function
+
 def store(request, category_slug = None ): # we are passing a slug field to filter the content based on the user request 
     categories = None
     products = None
@@ -61,11 +68,15 @@ def store(request, category_slug = None ): # we are passing a slug field to filt
 
 def product_detail(request, category_slug, product_slug):
     try:
-        single_product = Product.objects.get(category__slug = category_slug, slug= product_slug) # here we wanted to get a hold of the slug of the category which is present in the category app. (__slug is a method to access the slug field of that category = which should be matched against the slug field in the url request)
+        single_product = Product.objects.get(category__slug = category_slug, slug= product_slug)                    # here we wanted to get a hold of the slug of the category which is present in the category app. (__slug is a method to access the slug field of that category = which should be matched against the slug field in the url request)
+        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product= single_product).exists()        #  __cart to check the cart model ('cart'  < __cart_id ), because cart is a foreign key of cart item. so first we are accessing the cart first then through it we are accessing ' cart_id' < so that is the reason we are using the under score. '_cart_id(request) is the private function we created inside the cart view function. then it is filter by single product.
+                                                                                                                # return HttpResponse(in_cart)   # if the above query returns anything, it will be true  then we are not gonna show an add button.
+                                                                                                                # exit() # if the above condition is true it will simply exit the code.
     except Exception as e:
          raise e
     context={
         'single_product': single_product,  # creating a context dictionary.
+        'in_cart'       : in_cart,         # check result of the  item is already in cart or not.
      }
     return render(request, 'user/shop_single.html', context)
 
