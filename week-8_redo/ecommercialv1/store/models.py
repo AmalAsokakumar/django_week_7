@@ -5,6 +5,7 @@ from django.db import models
 from category.models import Categories as category   # here w are using category as foreign key so we need to include it. 
 from django.urls import reverse 
 from brand.models import Brands as brand
+
 # from brand.models import brand 
 # Create your models here.
 
@@ -32,3 +33,37 @@ class Product(models.Model):
          return reverse('product_detail', args=[self.category.slug, self.slug])# here we have 2 arguments product slugs and categories slug. here self means this product and category is mentioned above and slug is from  category app ( we can access them because these fields are interconnected with : foreignkey . )   and second slug is this products slug.
     def __str__(self):
         return self.product_name
+    
+    
+    
+    
+    
+class VariationManager(models.Manager):
+    def color(self):
+        return super(VariationManager, self).filter(variation_category='color', is_active=True)
+    
+    def size(self):
+        return super(VariationManager, self).filter(variation_category='size', is_active=True)
+    
+    
+    
+variation_category_choice = (                                                                                         # this is used to create a drop down variation list for the product.
+    ('color','color'),
+    ('size','size'),
+)
+    
+    
+    
+class Variation(models.Model):
+    product             = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variation_category  = models.CharField(max_length=100, choices= variation_category_choice)
+    variation_value     = models.CharField(max_length=100)
+    is_active           = models.BooleanField(default=True)
+    created_date        = models.DateTimeField(auto_now=True)
+    
+    objects = VariationManager()                                                                                        # only now will the two functions which are defined above will start working.
+    
+    # def __str__(self):
+    #     self.variation_value
+    def __unicode__(self):
+      return self.variation_value
