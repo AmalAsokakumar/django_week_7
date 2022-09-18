@@ -16,6 +16,33 @@ from cart.models import CartItem
 # for paginator function
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator  
 
+
+# for search function
+from django.db.models import Q
+
+
+
+
+
+# def search(request):
+#     return HttpResponse('check')
+    # if 'keyword' in request.GET:                                                                        # checking for if the request have this 'keyword' 
+    #     print('\n\n keyword found \n \n ')
+    #     keyword = request.GET['keyword']                                                                #if > store the value of the keyword variable is stored in > keyword 
+    #     if keyword :                                                                                    # we are only doing these operation if the keyword is not empty.
+    #         print('\n\n print the search key word' + str(keyword))
+    #         products = Product.objects.order_by('-created_date').filter(description__icontains=keyword) # here description < is a field in Product model and "__icontains" is a function which looks inside the description for a match with the search
+    #     context = {
+    #             'products': products,
+    #            }
+    #     return render(request, 'user/shop.html', context)
+    # return render(request, 'user/shop.html')
+    
+
+
+
+
+
 def store(request, category_slug = None ):                                                           # we are passing a slug field to filter the content based on the user request 
     categories = None
     products = None
@@ -41,6 +68,11 @@ def store(request, category_slug = None ):                                      
         
     }
     return render(request,'user/shop.html',context)
+
+
+
+
+
 
 
 
@@ -97,21 +129,19 @@ def product_detail(request, category_slug, product_slug):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def search(request):
+    products= None
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            products = Product.objects.order_by('-created_date').filter( Q(description__icontains=keyword) | Q(product_name__icontains=keyword)) # "filter(description__icontains=keyword , product_name__icontains=keyword , brand_name__icontains=keyword)"in the filter section we can use & and , for and operations and 'Q' - or query set for or operations 
+            # products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
+            product_count = products.count()
+    context = {
+        'products': products,
+        'product_count': product_count,
+    }
+    return render(request, 'user/shop.html', context)
 
 
 
@@ -180,3 +210,5 @@ def edit_product(request, id):
             return redirect('product_view')
         return render(request, 'editCB.html', {'form': form})
     return redirect('/') 
+
+

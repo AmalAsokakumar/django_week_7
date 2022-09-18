@@ -23,7 +23,7 @@ class Product(models.Model):
     stock           = models.IntegerField()
     is_available    = models.BooleanField(default=True)
     offer_status    = models.BooleanField(default=False)
-    category        = models.ForeignKey(category, on_delete=models.CASCADE) # (model_name, what to do when we delete this category) here the entair Field will be deleted when delete this particular field. 
+    category        = models.ForeignKey(category, on_delete=models.CASCADE) # (model_name, what to do when we delete this category) here the entire Field will be deleted when delete this particular field. 
     brand           = models.ForeignKey(brand, on_delete=models.CASCADE)
     created_date    = models.DateTimeField(auto_now_add =True)
     modified_date   = models.DateTimeField(auto_now =True) 
