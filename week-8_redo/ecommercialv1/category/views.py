@@ -55,5 +55,5 @@ def edit_category(request, id):
             edit = form.save(commit=False)
             edit.save()
             return redirect('category_view')
-        return render(request, 'editCB.html', {'form': form})
+        return render(request, 'edit_category.html', {'form': form})
     return redirect('/') 

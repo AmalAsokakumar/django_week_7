@@ -14,21 +14,29 @@ from cart.views import _cart_id
 from cart.models import CartItem
 
 # for paginator function
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator  
 
-def store(request, category_slug = None ): # we are passing a slug field to filter the content based on the user request 
+def store(request, category_slug = None ):                                                           # we are passing a slug field to filter the content based on the user request 
     categories = None
     products = None
-    if category_slug != None: # if the slug is not none, we have to do some database operations.
-        categories = get_object_or_404(category, slug=category_slug)# what this query set will do is like it will look for a the requested objects if not found it will show us a 404 error. (,in category models slug field )
-        products = Product.objects.filter(category=categories, is_available=True)# to get all the product in the categories if it's available.
-        product_count=products.count()# to count the products in the category that we have chosen.
-    else: # if slug field is empty that is we haven't chosen a category 
-        products = Product.objects.all().filter(is_available=True)
-        product_count = products.count()# we are finding product count using python function. 
+    if category_slug != None:                                                                       # if the slug is not none, we have to do some database operations.
+        categories = get_object_or_404(category, slug=category_slug)                                # what this query set will do is like it will look for a the requested objects if not found it will show us a 404 error. (,in category models slug field )
+        products = Product.objects.filter(category=categories, is_available=True)                   # to get all the product in the categories if it's available.
+                                                                                                    # these three lines of codes are repeated.
+        paginator = Paginator(products,6)                                                           # product is the model object that we wanted to print, (model_object, number_of_product) is the number of product that we wanted to show.
+        page =request.GET.get('page')                                                               # we will capture the url that comes with the page number ('page') < which we enter to navigate like slug
+        paged_products = paginator.get_page(page) 
+        product_count=products.count()                                                              # to count the products in the category that we have chosen.
+    else:                                                                                           # if slug field is empty that is we haven't chosen a category 
+        products = Product.objects.all().filter(is_available=True).order_by('id')
+        paginator = Paginator(products,6)                                                           # product is the model object that we wanted to print, (model_object, number_of_product) is the number of product that we wanted to show.
+        page =request.GET.get('page')                                                               # we will capture the url that comes with the page number ('page') < which we enter to navigate like slug
+        paged_products = paginator.get_page(page)                                                   # now we have 6 products stored in this page because of "paginator = Paginator(products,6) " function.
+        product_count = products.count()                                                            # we are finding product count using python function. 
     
     context = {
-        
-        'products': products,
+        'products':paged_products,                                                                  #
+         #'products': products,                                                                     # we use paginator to customize the number of product that we wanted to show 
         'product_count': product_count,
         
     }
@@ -75,8 +83,8 @@ def product_detail(request, category_slug, product_slug):
     except Exception as e:
          raise e
     context={
-        'single_product': single_product,  # creating a context dictionary.
-        'in_cart'       : in_cart,         # check result of the  item is already in cart or not.
+        'single_product': single_product,                                                           # creating a context dictionary.
+        'in_cart'       : in_cart,                                                                  # check result of the  item is already in cart or not.
      }
     return render(request, 'user/shop_single.html', context)
 

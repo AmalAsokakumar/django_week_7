@@ -5,6 +5,7 @@ from store.models import Product
 from .models import Cart, CartItem
 # Create your views here.
 
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -96,18 +97,25 @@ def cart(request, total=0, quantity=0, cart_item=None):
                                                                         # print('we are currently inside the cart page')
                                                                         # return HttpResponse('we are in future cart page')
     try:
+        tax=0
+        grand_total=0
         cart = Cart.objects.get(cart_id=_cart_id(request))              # calling the above private function for the cart id.
         cart_items = CartItem.objects.filter(cart=cart, is_active=True)
         for cart_item in cart_items:
             total +=(cart_item.product.price * cart_item.quantity)     # after this calculations we can add the offers based on these
             quantity = cart_item.quantity
-    except ObjectNotExist:
+            tax =(18* total)/100
+            grand_total = total + tax
+    except ObjectDoesNotExist:
         pass# we can simply pass it.
     
     context = {
-        'total': total,
-        'quantity': quantity,
-        'cart_items': cart_items,
+        'total'         : total,
+        'quantity'      : quantity,
+        'cart_items'    : cart_items,
+        'tax'           :tax,
+        'grand_total'   : grand_total,
+        
     }
     return render(request, 'cart_final.html', context)
 
