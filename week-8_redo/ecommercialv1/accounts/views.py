@@ -60,24 +60,6 @@ def register(request):
 
 
 
-# basic views 
-def home(request):
-    return render(request, 'user/index.html',{})
-def contact(request):
-    return render(request, 'user/contact.html',{})
-def about(request):
-    return render(request, 'user/about.html',{})
-
-
-
-
-
-#user 
-def login(request):
-    return render(request, 'sneat/auth-login-basic.html', {})
-def logout(request):
-    pass
-
 
 
 
@@ -137,7 +119,7 @@ def admin_logout(request):
     return redirect('admin_login')
 
 
-@login_required(login_url= '/')
+@login_required(login_url= 'admin_login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True) 
 def admin_home(request):
     # if 'email' in request.session:

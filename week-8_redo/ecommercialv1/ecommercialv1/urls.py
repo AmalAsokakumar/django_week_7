@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls), # all django admin activities 
-    path('',include('accounts.urls'), name='accounts'), # custom user, admin , basic pages.  
+    path('superuser/',include('accounts.urls'), name='accounts'), # custom user, admin , basic pages.  
     path('category/',include('category.urls'), name='category'), # category specific pages.
     path('brand/',include('brand.urls'), name='brand'), # brand specific. 
     path('store/',include('store.urls'), name='store'), # store related pages.
     path('cart/',include('cart.urls'), name='cart'), # cart specific
+    path('',include('users.urls'), name='users')
 ]
 urlpatterns =  urlpatterns + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # to ensure we can access the picture into the templates. 
