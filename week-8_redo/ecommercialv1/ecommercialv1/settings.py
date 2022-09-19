@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
+    # 'users',
     'cart',
     'store',
     'crispy_forms',
@@ -78,10 +78,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommercialv1.wsgi.application'
 # this field is added to let django know that we are using a custom model to create users
-AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the second "Account" is the model name that we created inside the models.py file
+AUTH_USER_MODEL = 'accounts.Account' # first 'users' is the app_name  & the second "Account" is the model name that we created inside the models.py file
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 
 # DATABASES = {
 #     'default': {
@@ -93,6 +95,7 @@ AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the se
 #     }
 # }
 
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -103,6 +106,7 @@ AUTH_USER_MODEL = 'accounts.Account' # first 'account' is the app_name  & the se
 #         'PORT': '5432',
 #     }
 # }
+
 
 
 

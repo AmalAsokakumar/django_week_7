@@ -10,10 +10,10 @@ class RegistrationForm(forms.ModelForm):
                 }
             )
         )
-    password2 = forms.CharField(
+    confirm_password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder':'Password',
+                'placeholder':'Confirm Password',
                 'class': 'form-control'
                 }
             )
@@ -25,8 +25,8 @@ class RegistrationForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()                                 # super class is used to change the way this fields is being saved.
         password = cleaned_data.get('password')
-        confirmed_password = cleaned_data.get('confirmed_password')
-        if password != confirmed_password:                                          #  basically checks if both password matches or not 
+        confirm_password = cleaned_data.get('confirm_password')
+        if password != confirm_password:                                          #  basically checks if both password matches or not 
             raise forms.ValidationError("password does not match!")
         
         

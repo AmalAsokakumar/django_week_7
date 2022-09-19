@@ -28,17 +28,17 @@ from django.core.mail import EmailMessage
 # register function  with out any otp method for activation. need more adjustments 
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST) # here the request.post will contain all the field values from the form submission. 
+        form = RegistrationForm(request.POST)                                                                       # here the request.post will contain all the field values from the form submission. 
 
-        if form.is_valid(): # to check whether all the field in this form is valid or not. 
-            first_name = form.cleaned_data['first_name'] # while using django forms we use cleaned_data to fetch the values/from request
+        if form.is_valid():                                                                                                 # to check whether all the field in this form is valid or not. 
+            first_name = form.cleaned_data['first_name']                                                                # while using django forms we use cleaned_data to fetch the values/from request
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email']
             phone_number = form.cleaned_data['phone_number']
-            password = form.cleaned_data['password'] # we will validate the conform password with password in form level only. 
-            username = email.split('@')[0] # here we are using first part of email to create a username for the user. 
-            # to create a user,
-            # here the create_user is from django  models we have create_user in MyAccountManager, similarly there is a function to create a super user also.
+            password = form.cleaned_data['password']                                                             # we will validate the conform password with password in form level only. 
+            username = email.split('@')[0]                                                                              # here we are using first part of email to create a username for the user. 
+                                                                                                            # to create a user,
+                                                                                                # here the create_user is from django  models we have create_user in MyAccountManager, similarly there is a function to create a super user also.
             user = Account.objects.create_user(first_name=first_name,
                                                last_name=last_name,
                                                email=email,
@@ -47,14 +47,14 @@ def register(request):
                                                ) # there is no field to accept phone number in models.py so we are attaching it like.
             user.phone_number = phone_number # this will update the user object with the phone number.
             user.save() # this field will be created in the database. 
-            return render (request, 'sneat/auth-register-basic.html',{}) 
+            return render (request, 'login.html',{}) 
             
     else:       
-        form = RegistrationForm()
-        context = {
+            form = RegistrationForm()
+    context = {
             'form': form, 
         }
-        return render (request, 'sneat/auth-register-basic.html', context)
+    return render (request, 'register.html', context)
 
 
 
@@ -79,12 +79,6 @@ def list_users(request): # need to recheck this
 
 
 
-
-
-
-
-
-
 #admin 
 #authentication steps are not added. 
 
@@ -95,14 +89,14 @@ def admin_login(request):
         # return redirect('admin_home')
     
     if request.user.is_authenticated:
-         return redirect('/')  # create a templated to handle this 
+         return redirect('admin_home')  # create a templated to handle this 
      
     elif request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        user = auth.authenticate(email=email, password=password, is_superuser=True)
+        user = auth.authenticate(email=email, password=password)
         if user is not None:
-            auth.login(request,user)
+            auth.login(request, user)
             # request.session['email']= email
             
             return redirect('admin_home')
@@ -111,12 +105,56 @@ def admin_login(request):
             return redirect('admin_login')
     else:
         context={}
-        return render(request, 'sneat/admin_login.html',{})    
+        return render(request, 'login.html',{})    
     
 
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True) 
+def login(request):
+    # if 'email' in request.session:
+        # return redirect('admin_home')
+    
+    if request.user.is_authenticated:
+         return redirect('/')  # create a templated to handle this 
+     
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(email=email, password=password)
+        if user is not None:
+            auth.login(request, user)
+            # request.session['email']= email
+            
+            return redirect('/')
+        else:
+            messages.error(request,'Invalid username or password')
+            return redirect('/')
+    else:
+        context={}
+    return render(request, 'login.html',{})   
+
+
+
+
+
+@login_required(login_url = 'login')
 def admin_logout(request):
     auth.logout(request)
+    messages.success(request,'you are logged out')
     return redirect('admin_login')
+
+
+
+
+@login_required(login_url = 'login')
+def logout(request):
+    auth.logout(request)
+    messages.success(request,'you are logged out')
+    return redirect('admin_login')
+
+
+
 
 
 @login_required(login_url= 'admin_login')
@@ -131,11 +169,13 @@ def admin_home(request):
 
 
 
-
-
-
-
-
+# basic views 
+def home(request):
+    return render(request, 'user/index.html',{})
+def contact(request):
+    return render(request, 'user/contact.html',{})
+def about(request):
+    return render(request, 'user/about.html',{})
 
 
 

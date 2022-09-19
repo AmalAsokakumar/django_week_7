@@ -74,21 +74,49 @@ def about(request):
 
 
 
-#user 
-def login(request):
-    if request.method == 'POST':
-        email       = request.POST['email']
-        password    = request.POST['password']
-        
-        user_1 = auth.authenticate(email=email, password=password)
-        if user_1 is not None:
-            auth.login(request, user_1)
-            # messages.success(request,'you have successfully logged in')
-            return redirect('user_home')  # should be redirect to dashboard
-        else:
-            messages.error(request, 'invalid credentials ')
-            return redirect('login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True) 
+def admin_login(request):
+    # if 'email' in request.session:
+        # return redirect('admin_home')
+    
+    if request.user.is_authenticated:
+         return redirect('/')  # create a templated to handle this 
+     
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(email=email, password=password, is_superuser=True)
+        if user is not None:
+            auth.login(request,user)
+            # request.session['email']= email
             
-    return render(request, 'login.html', {})
-def logout(request):
-    pass
+            return redirect('admin_home')
+        else:
+            messages.error(request,'Invalid username or password')
+            return redirect('admin_login')
+    else:
+        context={}
+        return render(request, 'sneat/admin_login.html',{})    
+    
+
+
+
+
+def admin_logout(request):
+    auth.logout(request)
+    return redirect('admin_login')
+
+
+
+
+
+@login_required(login_url= 'admin_login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True) 
+def admin_home(request):
+    # if 'email' in request.session:
+        # return HttpResponse('home view')
+    # return render(request, 'sneat/admin_index.html', {}) # for testing temp hide it 
+    return render(request, 'admin_index.html', {})
+    # else: 
+    #     return redirect ('admin_login')
