@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import RegistrationForm
 from .models import Account
+from django.contrib import messages, auth
 
 
 
@@ -31,16 +32,17 @@ def register(request):
             username        = email.split('@')[0]                                                                  # here we are using first part of email to create a username for the user. 
                                                                                                             # to create a user,
                                                                                                             # here the create_user is from django  models we have create_user in MyAccountManager, similarly there is a function to create a super user also.
-            user = Account.objects.create_user(first_name=first_name,                                       # here we are using the create user function that we created in account_ Models.
+            user_1 = Account.objects.create_user(first_name=first_name,                                       # here we are using the create user function that we created in account_ Models.
                                                last_name=last_name,
                                                email=email,
                                                username=username,
                                                password=password,
                                                
                                                )                                                            # there is no field to accept phone number in models.py so we are attaching it like this.
-            user.phone_number = phone_number                                                                # this will update the user object with the phone number. because we hav
-            user.save()                                                                                     # this field will be created in the database. 
-            
+            user_1.phone_number = phone_number                                                                # this will update the user object with the phone number. because we hav
+            user_1.save()                                                                                     # this field will be created in the database. 
+            messages.success(request, 'registration success')
+            return redirect('register')
     else:       
         form = RegistrationForm()
     context = {
@@ -74,6 +76,19 @@ def about(request):
 
 #user 
 def login(request):
-    return render(request, 'sneat/auth-login-basic.html', {})
+    if request.method == 'POST':
+        email       = request.POST['email']
+        password    = request.POST['password']
+        
+        user_1 = auth.authenticate(email=email, password=password)
+        if user_1 is not None:
+            auth.login(request, user_1)
+            # messages.success(request,'you have successfully logged in')
+            return redirect('user_home')  # should be redirect to dashboard
+        else:
+            messages.error(request, 'invalid credentials ')
+            return redirect('login')
+            
+    return render(request, 'login.html', {})
 def logout(request):
     pass
