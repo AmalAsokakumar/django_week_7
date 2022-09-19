@@ -24,4 +24,7 @@ urlpatterns = [
     path('admin-login/',views.admin_login, name= 'admin_login'),
     path('admin-logout/',views.admin_logout, name= 'admin_logout'),
     path('admin-home/',views.admin_home, name= 'admin_home'),
+    path('admin-list-users/',views.admin_list_users, name= 'admin_list_users'),
+    path('admin-disable-users/<int:id>',views.admin_user_block, name = 'admin_disable_user'),
+    path('admin-enable-users/<int:id>',views.admin_user_enable, name = 'admin_enable_user'),
 ]

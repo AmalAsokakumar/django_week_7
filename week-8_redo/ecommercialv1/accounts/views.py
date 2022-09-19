@@ -65,13 +65,34 @@ def register(request):
 
 
 
-def list_users(request): # need to recheck this 
-    list= Account.objects.order_by('id')
+def admin_list_users(request): # need to recheck this 
+    #list= Account.objects.order_by('id')
+    list= Account.objects.filter( is_superuser=False).order_by('id')
     
     context = {
         'list': list,
     }
-    return render(request, 'editCB.html',context)
+    return render(request, 'list_users.html',context)
+
+
+
+def admin_user_enable(request, id):
+    user = Account.objects.get(id = id)
+    user.is_active = True
+    user.save()
+    return redirect('admin_list_users')
+
+def admin_user_block(request, id):
+    user = Account.objects.get(id = id)
+    user.is_active = False
+    user.save()
+    return redirect('admin_list_users')
+   
+
+    
+
+
+    
     
 
 
